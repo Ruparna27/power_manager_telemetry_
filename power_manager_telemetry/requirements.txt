@@ -1,0 +1,5 @@
+psutil>=5.8.0
+pySMART>=1.0.5
+matplotlib>=3.4.0
+pandas>=1.2.0
+

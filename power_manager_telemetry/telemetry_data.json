@@ -1,0 +1,21 @@
+{
+    "cpu": {
+        "percent": 0.4,
+        "cores": 12,
+        "frequency": 0.8048333333333334
+    },
+    "memory": {
+        "total": 16439758848,
+        "available": 12965339136,
+        "percent": 21.1
+    },
+    "network": {
+        "bytes_sent": 68683102,
+        "bytes_recv": 497338054
+    },
+    "power_utilization": {
+        "cpu_power": 64.0,
+        "nic_power": 40.0,
+        "tdp_power": 56.0
+    }
+}

@@ -27,57 +27,58 @@ The architecture of this project includes the following components:
 <h3> Steps </h3>
 <li>Clone the repository:</li>
 
-git clone https://github.com/yourusername/power_manager_telemetry.git
-cd power_manager_telemetry
+  git clone https://github.com/yourusername/power_manager_telemetry.git
+
+    cd power_manager_telemetry
 
 <li>Set up a Python virtual environment:</li>
 
-python3 -m venv env
-source env/bin/activate
-Install Python dependencies:
+    python3 -m venv env
+    source env/bin/activate
+<li>Install Python dependencies:</li>
 
+    pip install -r requirements.txt
 
-pip install -r requirements.txt
-Install Docker:
+<li>Install Docker:</li>
 
-
-sudo apt-get update
-sudo apt-get install docker.io
-sudo systemctl start docker
-sudo systemctl enable docker
+    sudo apt-get update
+    sudo apt-get install docker.io
+    sudo systemctl start docker
+    sudo systemctl enable docker
 
 <li>Build the Docker container for stress testing:</li>
 
-cd stress_test
-docker build -t stress-container .
-Usage
-Running the Stress Test Container
-Start the Docker container to simulate high system utilization:
+    cd stress_test
+    docker build -t stress-container .
 
+<li>Usage</li>
+    Running the Stress Test Container
+    Start the Docker container to simulate high system utilization:
 
-docker run --rm -it stress-container
+    docker run --rm -it stress-container
 
 <li>Collecting Telemetry Data</li>
-Run the telemetry data collection script:
+    Run the telemetry data collection script:
 
 
-cd scripts
-python collect_telemetry.py
-This script will collect telemetry data and save it in ../telemetry_data.json.
+    cd scripts
+    python collect_telemetry.py
+  
+   This script will collect telemetry data and save it in ../telemetry_data.json.
 
 <li>Measuring Power Utilization</li>
-Run the power measurement script:
+    Run the power measurement script:
 
+    python measure_power.py
 
-python measure_power.py
-This script will measure the power utilization and update the telemetry data file.
+  This script will measure the power utilization and update the telemetry data file.
 
 <li>Generating the Report</li>
-Run the report generation script:
+    Run the report generation script:
 
+    python generate_report.py
 
-python generate_report.py
-This script will generate a report based on the collected telemetry data and save it as report.json.
+  This script will generate a report based on the collected telemetry data and save it as report.json.
 
 <h2>Directory Structure</h2>
 

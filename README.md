@@ -183,13 +183,23 @@ CPU utilization over time shows how actively the CPU is being used at different 
 <li>Memory Usage Over Time</li>
 Memory usage over time indicates how much of the system's available memory is being utilized at different points. According to the data, memory usage fluctuated between 20.8% and 22.0% across the timestamps provided (08:00:00, 08:10:00, 08:20:00, 08:30:00). 
 
+ ![Memory Usage Over Time](power_manager_telemetry/img_g2.png)
 
 <li>Network I/O Over Time</li>
 Network I/O, measured by bytes sent and received, tracks data traffic over a network interface. The data shows increasing trends in both bytes sent and received over time intervals (08:00:00, 08:10:00, 08:20:00, 08:30:00), indicating active network communication. 
 
-
+ ![Network I/O Over Time](power_manager_telemetry/img_g3.png)
+ 
 <li>Power Consumption Over Time</li>
 Power consumption data, collected at specific timestamps (08:00:00, 08:10:00, 08:20:00, 08:30:00), reflects the energy usage of system components like the CPU, NIC (Network Interface Card), and TDP (Thermal Design Power). 
+
+ ![Power Consumption Over Time](power_manager_telemetry/img_g4.png)
+
+ <h2>Analysis</h2>
+ The collected telemetry data shows that the CPU utilization was minimal at 0.4%, with 12 cores operating at an average frequency of 0.805 GHz. The memory usage was at 21.1%, 
+ with 12,965,339,136 bytes available out of a total of 16,439,758,848 bytes. Network activity included 68,683,102 bytes sent and 497,338,054 bytes received.
+ The power consumption for the CPU was measured at 64.0 watts, the NIC at 40.0 watts, and the TDP at 56.0 watts. These values indicate the energy usage of the system components 
+ under the tested conditions.
 
 
 

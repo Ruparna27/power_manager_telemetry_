@@ -175,8 +175,21 @@ The power consumption measured for different system components is summarized bel
 </table>
 
 <h2>Graphs and Charts</h2>
-   	<li>CPU Utilization Over Time</li>
+<li>CPU Utilization Over Time</li>
 CPU utilization over time shows how actively the CPU is being used at different intervals.CPU utilization ranged from 0.4% to 0.6% over successive timestamps (08:00:00, 08:10:00, 08:20:00, 08:30:00). 
      
  ![CPU Utilization Over Time](power_manager_telemetry/img_g1.png)
+
+<li>Memory Usage Over Time</li>
+Memory usage over time indicates how much of the system's available memory is being utilized at different points. According to the data, memory usage fluctuated between 20.8% and 22.0% across the timestamps provided (08:00:00, 08:10:00, 08:20:00, 08:30:00). 
+
+
+<li>Network I/O Over Time</li>
+Network I/O, measured by bytes sent and received, tracks data traffic over a network interface. The data shows increasing trends in both bytes sent and received over time intervals (08:00:00, 08:10:00, 08:20:00, 08:30:00), indicating active network communication. 
+
+
+<li>Power Consumption Over Time</li>
+Power consumption data, collected at specific timestamps (08:00:00, 08:10:00, 08:20:00, 08:30:00), reflects the energy usage of system components like the CPU, NIC (Network Interface Card), and TDP (Thermal Design Power). 
+
+
 

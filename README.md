@@ -23,62 +23,6 @@ The architecture of this project includes the following components:
 <h2> Installation </h2>
 <h3> Prerequisites </h3>
 <li>Python 3.8+</li>
-<li>Docker</li>
-<h3> Steps </h3>
-<li>Clone the repository:</li>
-
-  git clone https://github.com/yourusername/power_manager_telemetry.git
-
-    cd power_manager_telemetry
-
-<li>Set up a Python virtual environment:</li>
-
-    python3 -m venv env
-    source env/bin/activate
-<li>Install Python dependencies:</li>
-
-    pip install -r requirements.txt
-
-<li>Install Docker:</li>
-
-    sudo apt-get update
-    sudo apt-get install docker.io
-    sudo systemctl start docker
-    sudo systemctl enable docker
-
-<li>Build the Docker container for stress testing:</li>
-
-    cd stress_test
-    docker build -t stress-container .
-
-<li>Usage</li>
-    Running the Stress Test Container
-    Start the Docker container to simulate high system utilization:
-
-    docker run --rm -it stress-container
-
-<li>Collecting Telemetry Data</li>
-    Run the telemetry data collection script:
-
-
-    cd scripts
-    python collect_telemetry.py
-  
-   This script will collect telemetry data and save it in ../telemetry_data.json.
-
-<li>Measuring Power Utilization</li>
-    Run the power measurement script:
-
-    python measure_power.py
-
-  This script will measure the power utilization and update the telemetry data file.
-
-<li>Generating the Report</li>
-    Run the report generation script:
-
-    python generate_report.py
-
-  This script will generate a report based on the collected telemetry data and save it as report.json.
 
 <h2>Directory Structure</h2>
 
@@ -96,116 +40,142 @@ The architecture of this project includes the following components:
     ├── report.json
     ├── requirements.txt
     └── README.md
-<h2>Dockerfile (Root Directory)</h2>
-    Dockerfile
+<h2>How to Run the Project </h2>
+To run your Power Manager Telemetry project and achieve the expected outcomes, follow these steps:
 
-    # Root Dockerfile (if needed for further extensions)
-    Dockerfile (stress_test Directory)
-  Dockerfile
+<h3>1. Setting Up the Environment</h3>
+       Ensure you have Docker installed and configured. Additionally, make sure Python and necessary packages (psutil for telemetry data collection) are installed. 
 
-    # stress_test/Dockerfile
-    FROM ubuntu:latest
+<li>Install Docker:</li>
 
-    RUN apt-get update && apt-get install -y stress-ng
+    sudo apt-get update
+    sudo apt-get install docker.io
+    sudo systemctl start docker
+    sudo systemctl enable docker
 
-    CMD ["stress-ng", "--cpu", "4", "--io", "4", "--vm", "2", "--vm-bytes", "128M", "--timeout", "60s"]
-    run_stress.sh
+<li>Install Python Packages:</li>
 
-#!/bin/bash
-    
+    pip install psutil
+
+
+<h3>2. Running the Project</h3>
+    Step-by-Step Execution:
+    <li>Step 1: Build and Run the Stress Container</li>
+ 
+ Build and run the Docker container (stress-container) to simulate high system utilization.
+ 
+    # Navigate to stress_test directory
+    cd power_manager_telemetry/stress_test
+
+    # Build the stress container
     docker build -t stress-container .
-    docker run --rm -it stress-container
-    collect_telemetry.py
 
-import psutil
-import json
-import time
+    # Run the stress container to simulate high system utilization
+     docker run --rm -it stress-container
 
-def get_telemetry_data():
-    # CPU utilization
-    cpu_percent = psutil.cpu_percent(interval=1)
-    cpu_freq = psutil.cpu_freq()
+   <li>Step 2: Collect Telemetry Data</li>
+ While the stress container is running, collect telemetry data using collect_telemetry.py.
 
-    # Memory utilization
-    memory_info = psutil.virtual_memory()
+    # Navigate to scripts directory
+    cd ../scripts
 
-    # NIC utilization
-    net_io = psutil.net_io_counters()
+    # Run collect_telemetry.py to gather telemetry data
+    python collect_telemetry.py
 
-    telemetry_data = {
-        "cpu": {
-            "percent": cpu_percent,
-            "freq": cpu_freq._asdict() if cpu_freq else None,
-        },
-        "memory": {
-            "total": memory_info.total,
-            "available": memory_info.available,
-            "percent": memory_info.percent,
-            "used": memory_info.used,
-            "free": memory_info.free,
-        },
-        "network": {
-            "bytes_sent": net_io.bytes_sent,
-            "bytes_recv": net_io.bytes_recv,
-            "packets_sent": net_io.packets_sent,
-            "packets_recv": net_io.packets_recv,
-        }
-    }
-    return telemetry_data
+   <li>Step 3: Measure Power Utilization</li>
 
-def main():
-    telemetry_data = get_telemetry_data()
-    with open('../telemetry_data.json', 'w') as f:
-        json.dump(telemetry_data, f, indent=4)
-    print("Telemetry data written to ../telemetry_data.json")
+ Measure power utilization based on system utilization using measure_power.py.
 
-if __name__ == "__main__":
-    main()
-measure_power.py
-python
-Copy code
-import json
+    # Run measure_power.py to measure power utilization
+    python measure_power.py
 
-def measure_power_utilization():
-    with open('../telemetry_data.json', 'r') as f:
-        telemetry_data = json.load(f)
+<h3>3. Viewing Telemetry Data</h3>
+  The telemetry data is stored in ../telemetry_data.json. You can view this file to see the collected metrics including CPU percent, memory used, network bytes sent, and any 
+  additional metrics you've added.
+<br>
+<h3>5. Generating Reports (Optional)</h3>
+If you have a script to generate reports (generate_report.py), you can run it after collecting telemetry data to create detailed reports based on the captured metrics.
+<br>
+<h3>Notes:</h3>
+<li>Ensure you have appropriate permissions to run Docker commands and access system metrics.</li>
+<li>Modify the scripts (collect_telemetry.py, measure_power.py) as needed to include additional telemetry metrics or adjust measurement logic.</li>
+<li>Test each step to ensure the scripts work correctly in your environment, especially regarding Docker containerization and telemetry data collection.</li>
+By following these steps, you can effectively run your Power Manager Telemetry project and achieve the specified outcomes related to telemetry data collection and power utilization measurement.
 
-    # Placeholder for actual power measurement logic
-    telemetry_data['power'] = {
-        'cpu_power': telemetry_data['cpu']['percent'] * 0.5,  # Example formula
-        'memory_power': telemetry_data['memory']['percent'] * 0.3,  # Example formula
-        'nic_power': telemetry_data['network']['bytes_recv'] * 0.001  # Example formula
-    }
+<h2>Telemetry Data</h2>
+The telemetry data collected during the stress test includes metrics for CPU utilization, memory usage, and network I/O. Below is a summary of the key metrics:
+   
+  <table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CPU Utilization</td>
+      <td>0.4%</td>
+    </tr>
+    <tr>
+      <td>CPU Cores</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <td>CPU Frequency</td>
+      <td>0.805 GHz</td>
+    </tr>
+    <tr>
+      <td>Memory Total</td>
+      <td>16,439,758,848 bytes</td>
+    </tr>
+    <tr>
+      <td>Memory Available</td>
+      <td>12,965,339,136 bytes</td>
+    </tr>
+    <tr>
+      <td>Memory Usage</td>
+      <td>21.1%</td>
+    </tr>
+    <tr>
+      <td>Network Bytes Sent</td>
+      <td>68,683,102 bytes</td>
+    </tr>
+    <tr>
+      <td>Network Bytes Received</td>
+      <td>497,338,054 bytes</td>
+    </tr>
+  </tbody>
+</table>
 
-    with open('../telemetry_data.json', 'w') as f:
-        json.dump(telemetry_data, f, indent=4)
+<h2>Power Utilization</h2>
+The power consumption measured for different system components is summarized below:
 
-    print("Power utilization measured and updated in telemetry data.")
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Power Consumption (Watts)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CPU</td>
+      <td>64.0 W</td>
+    </tr>
+    <tr>
+      <td>NIC</td>
+      <td>40.0 W</td>
+    </tr>
+    <tr>
+      <td>TDP</td>
+      <td>56.0 W</td>
+    </tr>
+  </tbody>
+</table>
 
-if __name__ == "__main__":
-    measure_power_utilization()
-generate_report.py
-python
-Copy code
-import json
-from datetime import datetime
+<h2>Graphs and Charts</h2>
+   	<li>CPU Utilization Over Time</li>
+CPU utilization over time shows how actively the CPU is being used at different intervals.CPU utilization ranged from 0.4% to 0.6% over successive timestamps (08:00:00, 08:10:00, 08:20:00, 08:30:00). 
 
-def generate_report():
-    with open('../telemetry_data.json', 'r') as f:
-        telemetry_data = json.load(f)
 
-    report = {
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "telemetry_data": telemetry_data
-    }
-
-    with open('../report.json', 'w') as f:
-        json.dump(report, f, indent=4)
-
-    print("Report generated and written to ../report.json")
-
-if __name__ == "__main__":
-    generate_report()
-requirements.txt
-Copy code
-psutil

@@ -177,5 +177,6 @@ The power consumption measured for different system components is summarized bel
 <h2>Graphs and Charts</h2>
    	<li>CPU Utilization Over Time</li>
 CPU utilization over time shows how actively the CPU is being used at different intervals.CPU utilization ranged from 0.4% to 0.6% over successive timestamps (08:00:00, 08:10:00, 08:20:00, 08:30:00). 
-
+     
+ ![CPU Utilization Over Time](power_manager_telemetry/img_g1.png)
 
